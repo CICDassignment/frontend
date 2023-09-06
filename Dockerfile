@@ -1,13 +1,7 @@
-FROM node
+FROM nginx
 
-WORKDIR /app
-
-COPY package.json .
-
-RUN npm install
+WORKDIR /usr/share/nginx/html/
 
 COPY . .
 
-EXPOSE 3000
-
-CMD [ "npm", "start" ]
+EXPOSE 80
