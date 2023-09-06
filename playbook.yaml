@@ -21,6 +21,7 @@
     - name: apt update
       apt:
         update_cache: yes
+      ignore_errors: true
 
     - name: Install Docker if not already installed
       apt:
@@ -70,9 +71,10 @@
 
     - name: Run Docker Compose if the file exists
       docker_compose:
-        project_src: /home/ubuntu/frontend
+        project_src: /home/ubuntu/backend
         files:
           - "{{ compose_file_path }}"
         build: yes
+        recreate: always
       when: compose_file_stat.stat.exists
       become: true
