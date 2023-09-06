@@ -56,17 +56,17 @@
         accept_hostkey: yes
       become: true
 
-    - name: Ensure the Dockerfile exists
-      stat:
-        path: /home/ubuntu/frontend/Dockerfile
-      register: dockerfile_exists
-
     - name: Build Docker image
       docker_image:
         name: application-frontend
         path: /home/ubuntu/frontend
         dockerfile: Dockerfile
-      when: dockerfile_exists.stat.exists
+        force: yes
+
+    - name: Ensure the Dockerfile exists
+      stat:
+        path: /home/ubuntu/frontend/Dockerfile
+      register: dockerfile_exists
 
     - name: Run Docker Compose if the file exists
       docker_compose:
